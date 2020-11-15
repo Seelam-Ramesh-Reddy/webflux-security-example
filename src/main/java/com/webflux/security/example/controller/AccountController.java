@@ -1,7 +1,7 @@
 package com.webflux.security.example.controller;
 
 import com.webflux.security.example.entity.Account;
-import com.webflux.security.example.respository.AccountRepository;
+import com.webflux.security.example.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -14,11 +14,11 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @PostMapping("/saveAccount")
-    public Mono<Account> saveDetails() {
-        return accountRepository.save(Account.builder()
-                .nick("ramesh")
-                .phone("9981234564")
-                .build());
+    public Mono<Account> saveDetails(@RequestBody Mono<Account> accountMono) {
+        return accountMono.flatMap(accountBody -> accountRepository.save(Account.builder()
+                .nick(accountBody.getNick())
+                .phone(accountBody.getPhone())
+                .build()));
     }
 
     @GetMapping("/getAllDetails")

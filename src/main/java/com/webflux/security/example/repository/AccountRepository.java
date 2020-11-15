@@ -1,4 +1,4 @@
-package com.webflux.security.example.respository;
+package com.webflux.security.example.repository;
 
 import com.webflux.security.example.entity.Account;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
